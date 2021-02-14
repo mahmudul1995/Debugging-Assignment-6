@@ -11,7 +11,7 @@ let sliders = [];
 // If this key doesn't work
 // Find the name in the url and go to their website
 // to create your own api key
-//const KEY = '15674931-a9d714b6e9d654524df198e00&q';
+
 
 // show images 
 const showImages = (images) => {
@@ -30,27 +30,19 @@ const showImages = (images) => {
 
   if (images.length !== 0) {
     images.forEach(image => {
-        let div = document.createElement('div');
-        div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
-        div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
-        gallery.appendChild(div)
-  
+      let div = document.createElement('div');
+      div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
+      div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+      gallery.appendChild(div)
+
     })
   } else {
-  
+
     gallery.innerHTML = `<h3 style="color: red;text-align: center;margin: auto;">Your Name Isn't Found! Please Try Another Name. </h3>`;
-  
+
   }
 
 }
-
-
-
-
-
-
-
-
 const getImages = (query) => {
   toggleSpinner(true);
   fetch(`https://pixabay.com/api/?key=15674931-a9d714b6e9d654524df198e00&q=${query}&image_type=photo&pretty=true`)
@@ -93,7 +85,16 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  //const duration = document.getElementById('duration').value || 1000;
+  const duration = document.getElementById('duration').value || 1000;
+  let time;
+  if (duration < 0) {
+    time = 1000;
+  }
+  else {
+    time = duration;
+  }
+
+
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -108,7 +109,7 @@ const createSlider = () => {
   timer = setInterval(function () {
     slideIndex++;
     changeSlide(slideIndex);
-  }, 1000);
+  }, time);
 }
 
 // change slider index 
